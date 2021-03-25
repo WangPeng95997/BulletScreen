@@ -90,9 +90,9 @@ DWORD WINAPI BulletScreenWindow(LPVOID lpParameter)
 // 点击 "发送弹幕" 按钮时的处理函数
 int OnSend(HWND hwnd)
 {
-	LRESULT lRet = SendMessage(g_hwndEdit, WM_GETTEXTLENGTH, 0, 0) + 1;
+	LRESULT lRet = SendMessage(g_hwndEdit, WM_GETTEXTLENGTH, 0, 0);
 
-	if (lRet - 1)
+	if (lRet++)
 	{
 		LPVOID* lpSzText = (LPVOID*)LocalAlloc(LMEM_ZEROINIT, sizeof(LPVOID*) * (lRet + 1));
 		SendMessage(g_hwndEdit, WM_GETTEXT, lRet, (LPARAM)((WCHAR*)lpSzText + 2));
@@ -117,8 +117,6 @@ void OnCommand(HWND hwnd, WPARAM wParam)
 		OnSend(hwnd);
 		break;
 	}
-
-	return;
 }
 
 // 主窗口的WM_CREATE消息处理函数
